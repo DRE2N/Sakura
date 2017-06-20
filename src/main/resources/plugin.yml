@@ -1,0 +1,9 @@
+name: Sakura
+main: io.github.dre2n.sakura.Sakura
+version: ${project.version}
+author: Daniel Saukel
+dependencies: [BlockStore]
+commands:
+  sakura:
+    description: Gives a Sakura item
+    aliases: [sgive,cherry]
