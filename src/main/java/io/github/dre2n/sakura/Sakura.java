@@ -38,10 +38,10 @@ public class Sakura extends JavaPlugin {
         instance = this;
         getServer().getPluginManager().registerEvents(new SakuraListener(this), this);
         getCommand("sakura").setExecutor(new SakuraCommand());
-        cherry = getConfig().getString("cherry");
-        leaves = getConfig().getString("leaves");
-        log = getConfig().getString("log");
-        sapling = getConfig().getString("sapling");
+        cherry = getConfig().getString("cherry", cherry);
+        leaves = getConfig().getString("leaves", leaves);
+        log = getConfig().getString("log", log);
+        sapling = getConfig().getString("sapling", sapling);
     }
 
     public static Sakura getInstance() {
