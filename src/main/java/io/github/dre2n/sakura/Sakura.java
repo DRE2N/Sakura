@@ -32,6 +32,8 @@ public class Sakura extends JavaPlugin {
     public String leaves = "Cherry Blossoms";
     public String log = "Cherry Wood";
     public String sapling = "Cherry Sapling";
+    public double dropChanceCherry = 0.5;
+    public double dropChanceSapling = 5;
 
     @Override
     public void onEnable() {
@@ -42,6 +44,8 @@ public class Sakura extends JavaPlugin {
         leaves = getConfig().getString("leaves", leaves);
         log = getConfig().getString("log", log);
         sapling = getConfig().getString("sapling", sapling);
+        dropChanceCherry = getConfig().getDouble("dropChanceCherry", dropChanceCherry);
+        dropChanceSapling = getConfig().getDouble("dropChanceSapling", dropChanceSapling);
     }
 
     public static Sakura getInstance() {

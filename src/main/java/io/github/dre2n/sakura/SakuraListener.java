@@ -83,10 +83,10 @@ public class SakuraListener implements Listener {
         ItemStack tool = event.getPlayer().getInventory().getItemInMainHand();
         if (BlockStoreApi.containsBlockMeta(block, plugin, "leaves")) {
             event.setDropItems(false);
-            if (tool != null && tool.getType() == Material.SHEARS) {
+            if (tool != null && tool.getType() == Material.SHEARS | tool.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
                 world.dropItem(block.getLocation(), SakuraItem.LEAVES);
             }
-            if (new Random().nextInt(100) > 50) {
+            if (new Random().nextInt(100) < plugin.dropChanceCherry) {
                 world.dropItem(block.getLocation(), SakuraItem.CHERRY);
             }
             if (new Random().nextInt(100) > 15) {
