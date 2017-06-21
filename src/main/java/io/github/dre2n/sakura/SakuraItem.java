@@ -31,6 +31,7 @@ public class SakuraItem {
     public static final ItemStack SAPLING = setup(Material.SAPLING, Sakura.getInstance().sapling);
     public static final ItemStack LEAVES = setup(Material.WOOL, (short) 6, Sakura.getInstance().leaves);
     public static final ItemStack LOG = setup(Material.LOG_2, Sakura.getInstance().log);
+    public static final ItemStack SAKURA = setup(Material.RED_ROSE, (short) 7, Sakura.getInstance().sakura);
 
     public static ItemStack setup(Material type, short dv, String name) {
         ItemStack itemStack = setup(type, name);

@@ -23,11 +23,12 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -89,7 +90,7 @@ public class SakuraListener implements Listener {
             if (new Random().nextInt(100) < plugin.dropChanceCherry) {
                 world.dropItem(block.getLocation(), SakuraItem.CHERRY);
             }
-            if (new Random().nextInt(100) > 15) {
+            if (new Random().nextInt(100) < plugin.dropChanceSapling) {
                 world.dropItem(block.getLocation(), SakuraItem.SAPLING);
             }
         } else if (BlockStoreApi.containsBlockMeta(block, plugin, "log")) {
@@ -102,11 +103,22 @@ public class SakuraListener implements Listener {
     }
 
     @EventHandler
-    public void onCraftItem(CraftItemEvent event) {
+    public void onItemCraft(PrepareItemCraftEvent event) {
+        Boolean sakura = null;
         for (ItemStack item : event.getInventory().getContents()) {
-            if (item.getItemMeta().hasLore() && (ChatColor.GRAY + plugin.cherry).equals(getIdentifier(item))) {
-                event.setCancelled(true);
+            if (sakura == null && item.hasItemMeta() && item.getItemMeta().hasLore() && (ChatColor.GRAY + plugin.leaves).equals(getIdentifier(item))) {
+                sakura = true;
+            } else if (item.getType() != Material.AIR) {
+                sakura = false;
+            } else if (item.hasItemMeta() && item.getItemMeta().hasLore() && (ChatColor.GRAY + plugin.cherry).equals(getIdentifier(item))) {
+                event.getInventory().setResult(null);
+                break;
             }
+        }
+        if (sakura != null && sakura) {
+            ItemStack result = SakuraItem.SAKURA.clone();
+            result.setAmount(3);
+            event.getInventory().setResult(result);
         }
     }
 

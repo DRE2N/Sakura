@@ -31,6 +31,7 @@ public class Sakura extends JavaPlugin {
     public String cherry = "Cherry";
     public String leaves = "Cherry Blossoms";
     public String log = "Cherry Wood";
+    public String sakura = "Sakura";
     public String sapling = "Cherry Sapling";
     public double dropChanceCherry = 0.5;
     public double dropChanceSapling = 5;
@@ -43,6 +44,7 @@ public class Sakura extends JavaPlugin {
         cherry = getConfig().getString("cherry", cherry);
         leaves = getConfig().getString("leaves", leaves);
         log = getConfig().getString("log", log);
+        sakura = getConfig().getString("sakura", sakura);
         sapling = getConfig().getString("sapling", sapling);
         dropChanceCherry = getConfig().getDouble("dropChanceCherry", dropChanceCherry);
         dropChanceSapling = getConfig().getDouble("dropChanceSapling", dropChanceSapling);

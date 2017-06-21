@@ -43,6 +43,12 @@ public class SakuraCommand implements CommandExecutor {
             stack = SakuraItem.SAPLING.clone();
         } else if (item.equalsIgnoreCase("cherry")) {
             stack = SakuraItem.CHERRY.clone();
+        } else if (item.equalsIgnoreCase("log")) {
+            stack = SakuraItem.LOG.clone();
+        } else if (item.equalsIgnoreCase("leaves")) {
+            stack = SakuraItem.LEAVES.clone();
+        } else if (item.equalsIgnoreCase("flower") || item.equalsIgnoreCase("sakura")) {
+            stack = SakuraItem.SAKURA.clone();
         } else {
             sender.sendMessage(Sakura.getInstance().error);
             return false;
