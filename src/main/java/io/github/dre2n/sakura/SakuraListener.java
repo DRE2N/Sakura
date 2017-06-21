@@ -101,7 +101,7 @@ public class SakuraListener implements Listener {
     @EventHandler
     public void onCraftItem(CraftItemEvent event) {
         for (ItemStack item : event.getInventory().getContents()) {
-            if (item.getItemMeta().hasLore() && getIdentifier(item).equals(ChatColor.GRAY + plugin.log) || getIdentifier(item).equals(ChatColor.GRAY + plugin.cherry)) {
+            if (item.getItemMeta().hasLore() && (ChatColor.GRAY + plugin.cherry).equals(getIdentifier(item))) {
                 event.setCancelled(true);
             }
         }
