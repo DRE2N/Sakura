@@ -89,6 +89,9 @@ public class SakuraListener implements Listener {
             if (new Random().nextInt(100) > 50) {
                 world.dropItem(block.getLocation(), SakuraItem.CHERRY);
             }
+            if (new Random().nextInt(100) > 15) {
+                world.dropItem(block.getLocation(), SakuraItem.SAPLING);
+            }
         } else if (BlockStoreApi.containsBlockMeta(block, plugin, "log")) {
             event.setDropItems(false);
             world.dropItem(block.getLocation(), SakuraItem.LOG);
