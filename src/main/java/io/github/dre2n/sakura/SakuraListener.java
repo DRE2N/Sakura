@@ -71,7 +71,7 @@ public class SakuraListener implements Listener {
             if (getIdentifier(item).equals(ChatColor.GRAY + plugin.leaves)) {
                 setLeavesData(event.getBlock());
             } else if (getIdentifier(item).equals(ChatColor.GRAY + plugin.log)) {
-                setLeavesData(event.getBlock());
+                setLogData(event.getBlock());
             } else if (getIdentifier(item).equals(ChatColor.GRAY + plugin.sapling)) {
                 setSaplingData(event.getBlock());
             }
