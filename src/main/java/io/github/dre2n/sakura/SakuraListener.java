@@ -19,6 +19,7 @@ package io.github.dre2n.sakura;
 import java.util.Random;
 import net.sothatsit.blockstore.BlockStoreApi;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -79,12 +80,15 @@ public class SakuraListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
         Block block = event.getBlock();
         World world = event.getBlock().getWorld();
         ItemStack tool = event.getPlayer().getInventory().getItemInMainHand();
         if (BlockStoreApi.containsBlockMeta(block, plugin, "leaves")) {
             event.setDropItems(false);
-            if (tool != null && tool.getType() == Material.SHEARS | tool.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
+            if (tool != null && tool.getType() == Material.SHEARS || tool.hasItemMeta() && tool.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
                 world.dropItem(block.getLocation(), SakuraItem.LEAVES);
             }
             if (new Random().nextInt(100) < plugin.dropChanceCherry) {
