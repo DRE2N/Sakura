@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Daniel Saukel
+ * Copyright (C) 2017-2018 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +25,17 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -123,6 +128,26 @@ public class SakuraListener implements Listener {
             ItemStack result = SakuraItem.SAKURA.clone();
             result.setAmount(3);
             event.getInventory().setResult(result);
+        }
+    }
+
+    // Craftig Fix
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        Inventory inv = event.getInventory();
+        if (event.getSlotType() == SlotType.RESULT && event.getCurrentItem().isSimilar(SakuraItem.SAKURA) && event.getCurrentItem().getAmount() == 3) {
+            if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
+                event.setCancelled(true);
+            } else if (inv.containsAtLeast(SakuraItem.LEAVES, 2)) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        ItemStack remove = SakuraItem.LEAVES.clone();
+                        remove.setAmount(inv.getItem(inv.first(Material.WOOL)).getAmount() / 2);
+                        inv.removeItem(remove);
+                    }
+                }.runTaskLater(plugin, 1L);
+            }
         }
     }
 
