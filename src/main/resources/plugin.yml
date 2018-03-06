@@ -1,5 +1,5 @@
 name: Sakura
-main: io.github.dre2n.sakura.Sakura
+main: de.erethon.sakura.Sakura
 version: ${project.version}
 author: Daniel Saukel
 dependencies: [BlockStore]

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.sakura;
+package de.erethon.sakura;
 
 import java.util.Arrays;
 import org.bukkit.ChatColor;
@@ -28,10 +28,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class SakuraItem {
 
     public static final ItemStack CHERRY = setup(Material.BEETROOT, Sakura.getInstance().cherry);
-    public static final ItemStack SAPLING = setup(Material.SAPLING, Sakura.getInstance().sapling);
-    public static final ItemStack LEAVES = setup(Material.WOOL, (short) 6, Sakura.getInstance().leaves);
-    public static final ItemStack LOG = setup(Material.LOG_2, Sakura.getInstance().log);
-    public static final ItemStack SAKURA = setup(Material.RED_ROSE, (short) 7, Sakura.getInstance().sakura);
+    public static final ItemStack SAPLING = setup(LegacyUtil.OAK_SAPLING, Sakura.getInstance().sapling);
+    public static final ItemStack LEAVES = setup(LegacyUtil.PINK_WOOL, (short) (LegacyUtil.PINK_WOOL.name().equals("PINK_WOOL") ? 0 : 6), Sakura.getInstance().leaves);
+    public static final ItemStack LOG = setup(LegacyUtil.ACACIA_LOG, Sakura.getInstance().log);
+    public static final ItemStack SAKURA = setup(LegacyUtil.PINK_TULIP, (short) (LegacyUtil.PINK_TULIP.name().equals("PINK_TULIP") ? 0 : 7), Sakura.getInstance().sakura);
 
     public static ItemStack setup(Material type, short dv, String name) {
         ItemStack itemStack = setup(type, name);

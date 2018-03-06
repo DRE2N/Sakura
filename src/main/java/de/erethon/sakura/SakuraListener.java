@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.sakura;
+package de.erethon.sakura;
 
 import java.util.Random;
 import net.sothatsit.blockstore.BlockStoreApi;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -37,6 +37,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Wool;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -53,14 +54,14 @@ public class SakuraListener implements Listener {
     @EventHandler
     public void onStructureGrow(StructureGrowEvent event) {
         Block sapling = event.getLocation().getBlock();
-        if (sapling.getType() == Material.SAPLING && BlockStoreApi.containsBlockMeta(sapling, plugin, "sapling")) {
+        if (sapling.getType() == LegacyUtil.OAK_SAPLING && BlockStoreApi.containsBlockMeta(sapling, plugin, "sapling")) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     for (BlockState block : event.getBlocks()) {
-                        if (block.getType() == Material.LOG) {
+                        if (block.getType() == LegacyUtil.OAK_LOG) {
                             setLogData(block.getBlock());
-                        } else if (block.getType() == Material.LEAVES) {
+                        } else if (block.getType() == LegacyUtil.OAK_LEAVES) {
                             setLeavesData(block.getBlock());
                         }
                     }
@@ -94,20 +95,20 @@ public class SakuraListener implements Listener {
         if (BlockStoreApi.containsBlockMeta(block, plugin, "leaves")) {
             event.setDropItems(false);
             if (tool != null && tool.getType() == Material.SHEARS || tool.hasItemMeta() && tool.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) {
-                world.dropItem(block.getLocation(), SakuraItem.LEAVES);
+                world.dropItemNaturally(block.getLocation(), SakuraItem.LEAVES);
             }
             if (new Random().nextInt(100) < plugin.dropChanceCherry) {
-                world.dropItem(block.getLocation(), SakuraItem.CHERRY);
+                world.dropItemNaturally(block.getLocation(), SakuraItem.CHERRY);
             }
             if (new Random().nextInt(100) < plugin.dropChanceSapling) {
-                world.dropItem(block.getLocation(), SakuraItem.SAPLING);
+                world.dropItemNaturally(block.getLocation(), SakuraItem.SAPLING);
             }
         } else if (BlockStoreApi.containsBlockMeta(block, plugin, "log")) {
             event.setDropItems(false);
-            world.dropItem(block.getLocation(), SakuraItem.LOG);
+            world.dropItemNaturally(block.getLocation(), SakuraItem.LOG);
         } else if (BlockStoreApi.containsBlockMeta(block, plugin, "sapling")) {
             event.setDropItems(false);
-            world.dropItem(block.getLocation(), SakuraItem.SAPLING);
+            world.dropItemNaturally(block.getLocation(), SakuraItem.SAPLING);
         }
     }
 
@@ -143,7 +144,7 @@ public class SakuraListener implements Listener {
                     @Override
                     public void run() {
                         ItemStack remove = SakuraItem.LEAVES.clone();
-                        remove.setAmount(inv.getItem(inv.first(Material.WOOL)).getAmount() / 2);
+                        remove.setAmount(inv.getItem(inv.first(LegacyUtil.PINK_WOOL)).getAmount() / 2);
                         inv.removeItem(remove);
                     }
                 }.runTaskLater(plugin, 1L);
@@ -156,12 +157,19 @@ public class SakuraListener implements Listener {
     }
 
     private void setLogData(Block block) {
-        block.setType(Material.LOG_2);
+        block.setType(LegacyUtil.ACACIA_LOG);
         BlockStoreApi.setBlockMeta(block, plugin, "log", (byte) 1);
     }
 
     private void setLeavesData(Block block) {
-        block.setTypeIdAndData(Material.WOOL.getId(), (byte) 6, false);
+        block.setType(LegacyUtil.PINK_WOOL);
+        if (block.getType().name().equals("WOOL")) {
+            BlockState state = block.getState();
+            Wool wool = ((Wool) state.getData());
+            wool.setColor(DyeColor.PINK);
+            state.setData(wool);
+            state.update(true);
+        }
         BlockStoreApi.setBlockMeta(block, plugin, "leaves", (byte) 1);
     }
 

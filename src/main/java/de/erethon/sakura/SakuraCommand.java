@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.sakura;
+package de.erethon.sakura;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
