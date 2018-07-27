@@ -26,7 +26,8 @@ public class Sakura extends JavaPlugin {
 
     private static Sakura instance;
 
-    public String error = ChatColor.RED + "[Sakura] Error: Command usage is /sakura ([player]) [sapling|cherry]";
+    public String errorSyntax = ChatColor.RED + "[Sakura] Error: Command usage is /sakura ([player]) [sapling|cherry]";
+    public String errorPermission = ChatColor.RED + "[Sakura] Error: You do not have permission to use this command.";
     public String give = ChatColor.GRAY + "[Sakura] Giving %amount% of %type% to %player%.";
     public String cherry = "Cherry";
     public String leaves = "Cherry Blossoms";
@@ -41,6 +42,9 @@ public class Sakura extends JavaPlugin {
         instance = this;
         getServer().getPluginManager().registerEvents(new SakuraListener(this), this);
         getCommand("sakura").setExecutor(new SakuraCommand());
+        errorSyntax = getConfig().getString("error.syntax", errorSyntax);
+        errorPermission = getConfig().getString("error.permission", errorPermission);
+        give = getConfig().getString("give", give);
         cherry = getConfig().getString("cherry", cherry);
         leaves = getConfig().getString("leaves", leaves);
         log = getConfig().getString("log", log);

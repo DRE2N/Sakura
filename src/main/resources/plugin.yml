@@ -7,3 +7,4 @@ commands:
   sakura:
     description: Gives a Sakura item
     aliases: [sgive,cherry]
+api-version: 1.13

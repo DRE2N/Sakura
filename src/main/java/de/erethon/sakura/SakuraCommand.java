@@ -31,8 +31,12 @@ public class SakuraCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0 || args.length == 1 & !(sender instanceof Player)) {
-            sender.sendMessage(Sakura.getInstance().error);
-            return false;
+            sender.sendMessage(Sakura.getInstance().errorSyntax);
+            return true;
+        }
+        if (!sender.hasPermission("sakura.cmd")) {
+            sender.sendMessage(Sakura.getInstance().errorPermission);
+            return true;
         }
         Player player = args.length < 2 ? (Player) sender : Bukkit.getPlayer(args[0]);
         String item = args.length < 2 ? args[0] : args[1];
@@ -50,8 +54,8 @@ public class SakuraCommand implements CommandExecutor {
         } else if (item.equalsIgnoreCase("flower") || item.equalsIgnoreCase("sakura")) {
             stack = SakuraItem.SAKURA.clone();
         } else {
-            sender.sendMessage(Sakura.getInstance().error);
-            return false;
+            sender.sendMessage(Sakura.getInstance().errorSyntax);
+            return true;
         }
         stack.setAmount(amount);
         player.getInventory().addItem(stack);
